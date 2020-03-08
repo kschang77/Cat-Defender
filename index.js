@@ -56,10 +56,10 @@ function moveRight() {
 }
 
 
-function fireLaser() {
+ function fireLaser() {
   let laser = createLaserElement()
   mainPlayArea.appendChild(laser)
-  //let laserSFX = new Audio('audio/laser-sfx.m4a')
+  //let lasefunctionrSFX = new Audio('audio/laser-sfx.m4a')
   //laserSFX.play()
   moveLaser(laser)
 }
@@ -71,7 +71,7 @@ function createLaserElement() {
   let newLaser = document.createElement('img')
   newLaser.src = 'images/bullet.png'
   newLaser.classList.add('laser')
-  newLaser.style.left = `${xPosition}px`
+  newLaser.style.left = `${xPosition+10}px`
   newLaser.style.top = `${yPosition-20}px`
   return newLaser
 }
@@ -91,12 +91,12 @@ function moveLaser(laser) {
         scoreCounter.innerText = parseInt(scoreCounter.innerText) + 100
       }
     })
-    if (yPosition === 40) {
+    if (yPosition <= 40) {
       laser.remove()
     } else {
       laser.style.top = `${yPosition - 4}px`
     }
-  }, 10)
+  }, 10) // was 10
 }
 
 
@@ -123,9 +123,9 @@ function moveMonster(monster) {
         gameOver()
       }
     } else {
-      monster.style.top = `${yPosition + 2}px`
+      monster.style.top = `${yPosition + 2}px`   // set to 1 for debug, should be 2 or 3
     }
-  }, 30)
+  }, 30)  // was 30
 }
 
 
@@ -136,7 +136,7 @@ function checkLaserCollision(laser, monster) {
   let monsterTop = parseInt(monster.style.top)
   let monsterLeft = parseInt(monster.style.left)
   let monsterRight = monsterLeft + 30
-  if (laserTop != 340 && laserTop - 40 >= monsterTop) {
+  if (laserTop != 340 && laserTop >= monsterTop) {
     if ( (laserRight <= monsterRight && laserLeft >= monsterLeft) ) {
       return true
     } else {
@@ -160,11 +160,11 @@ function gameOver() {
   lasers.forEach(laser => laser.remove())
   setTimeout(() => {
     alert(`Game Over! A mouse made it past you. Your final score is ${scoreCounter.innerText}!`)
-    shooter.style.top = "180px"
+    shooter.style.left = "180px"
     startButton.style.display = "block"
     instructions.style.display = "block"
     scoreCounter.innerText = 0
-  }, 1100)
+  }, 1100)  // originally 1100
 }
 
 function playGame() {
@@ -173,5 +173,5 @@ function playGame() {
   window.addEventListener("keydown", letShipFly)
   //justice = new Audio("audio/Justice-One-Minute-To-Midnight.m4a")
   //justice.play()
-  monsterInterval = setInterval(() => { createMonster() }, 2100)
+  monsterInterval = setInterval(() => { createMonster() }, 2100) // originally 2100
 }
